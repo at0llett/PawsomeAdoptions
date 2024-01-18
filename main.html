@@ -22,7 +22,10 @@
   <p>More testing...</p>
 
   <script type="text/javascript">
-      
+      var link = document.createElement('link');
+      link.rel = 'icon';
+      document.head.appendChild(link);
+      link.href = 'Images/favicon.ico';
   </script>
   </body>
 </html>
