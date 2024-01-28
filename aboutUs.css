@@ -1,0 +1,125 @@
+body {
+    margin-top: 0px;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-bottom: 80px;
+    background-image: url('Images/background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background: #C179B9;
+
+}
+
+/* Menu */
+.menu ul {
+    list-style-type: none;
+    background-color: purple;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+    
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+    text-align: right;
+}
+
+.menu a:hover {
+    background-color: darkmagenta;
+}
+
+.menu li {
+    float: right;
+}
+
+#logoHome1 {
+    float: left;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+#logoHome2 {
+    float: right;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+#text1{
+    padding-left: 160px;
+    padding-top: 150px;
+    color:#EEEDEB;
+    font-size: 23px;
+    text-align: center; 
+
+}
+
+#image1{
+    
+    float:right;
+    clear:left;
+    padding-right: 300px;
+    padding-top: 50px;
+}
+
+#text2{
+    padding-top: 300px;
+    color:#EEEDEB;
+    font-size: 25px;
+    text-align: center;
+    padding-right: 200px;
+    
+}
+
+#image2{
+    
+    float:left;
+    padding-left: 300px;
+    padding-top: 200px;
+}
+
+#text3{
+    padding-left: 160px;
+    padding-top: 200px;
+    color:#EEEDEB;
+    font-size: 23px;
+    text-align: center; 
+
+}
+
+#image3{
+    
+    float:right;
+    clear:left;
+    padding-right: 300px;
+    padding-top: 100px;
+}
+
+#text4{
+    padding-top: 200px;
+    color:#EEEDEB;
+    font-size: 25px;
+    text-align: center;
+    padding-right: 200px;
+    
+}
+
+#image4{
+    
+    float:left;
+    padding-left: 300px;
+    padding-top: 100px;
+}
+
+#text5{
+    padding-top: 100px;
+    color:#EEEDEB;
+    font-size: 23px;
+    text-align: center; 
+
+}
