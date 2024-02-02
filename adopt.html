@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pawsome Adoptions</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="adopt.css">
+</head>
+
+<body>
+
+
+    <img id="logoHome1" src="Images/logo-white.png" alt="Home" width="100" height="100">
+    <img id="logoHome2" src="Images/logo-white.png" alt="Home" width="100" height="100">
+
+
+
+
+    <nav class="menu">
+        <ul>
+            <li><a href="#">My Profile</a></li>
+            <li><a href="#">Adopt</a></li>
+            <li><a href="#">Lost & Found</a></li>
+            <li><a href="#">Donations</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="main.html">Home</a></li>
+        </ul>
+    </nav>
+
+    <h1>Pick your pet!</h1>
+
+    <form>
+        <table id="animalInfo">
+            <tr>
+                <th>
+                    <label id="lType" for="type">Type</label>
+                    <br>
+                    <select name="type" id="type">
+                        <option value="Dog">Dog</option>
+                        <option value="Cat">Cat</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </th>
+                <th>
+                    <label id="lName" for="name">Name</label>
+                    <br>
+                    <input type="text" placeholder="Name" name="name" id="name" size="40">
+                    <br>
+                </th>
+                <th>
+                    <label id="lColor" for="color">Color</label>
+                    <br>
+                    <input type="text" placeholder="Color" name="color" id="color" size="40">
+                    <br>
+                </th>
+                <th>
+                    <label for="lGender">Gender</label>
+                    <br>
+                    <select name="gender" id="gender">
+                        <option value="Boy">Boy</option>
+                        <option value="Girl">Girl</option>
+                        <option value="Either">Either</option>
+                    </select>
+                </th>
+                <th>
+                    <label id="lBreed" for="breed">Breed</label>
+                    <br>
+                    <input type="text" placeholder="Breed" name="breed" id="breed" size="40">
+                    <br>
+                </th>
+            </tr>
+
+        </table>
+
+        <div id="search">
+            <button type="submit">Search!</button>
+        </div>
+
+    </form>
+
+    <table id="animalAdoptOptions">
+        
+    </table>
+
+
+    <script text="text/javascript">
+        $("#logoHome1").on("click", function () {
+            window.location.href = "main.html";
+        });
+        $("#logoHome2").on("click", function () {
+            window.location.href = "main.html";
+        });
+
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const fd = new FormData(form);
+
+            const urlEncoded = new URLSearchParams(fd).toString();
+
+            fetch('http://localhost:3000/upload', {
+                method: "POST",
+                body: urlEncoded,
+                headers: {
+                    'Content-type': 'application/x-www-form-urlencoded'
+                }
+            })
+
+                .then(response => {
+                    if (!response.ok) {
+                        //window.alert('WRONG');
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    //window.alert("Is it working?");
+                    // Populate the table with the received JSON data
+                    $('#animalAdoptOptions').empty(); // Clear existing table content
+
+
+                        for (var i = 0; i < data.length; i += 3) {
+                            var row = $('<tr>');
+                            for (var j = i; j < Math.min(i + 3, data.length); j++) {
+                                var item = data[j];
+
+                                //window.alert("FOR loop is being entered");
+
+                                var nameCell = $('<td>').text(item.AnimalName);
+                                var genderCell = $('<td>').text(item.AnimalGender);
+                                var ageCell = $('<td>').text(item.AnimalAge);
+
+                                row.append(nameCell, genderCell, ageCell);
+                                
+
+                                // Create a cell for each property in the item
+                                // $.each(item, function (key, value) {
+                                //     row.append($('<td>').text(value));
+                                // });
+                            }
+                            // Append the row to the table body
+
+                            
+
+                            $('#animalAdoptOptions').append(row);
+                        }
+
+                        
+
+
+                        // //console.log("Is it working?")
+
+
+
+                        // const animal = data[i];
+
+                        // window.alert(animal.AnimalName);
+                
+                        // const row = $('<tr>');
+                        // // Assuming 'id', 'name', and 'age' are properties of each animal object
+                        // row.append($('<td>').text(animal.id));
+                        // row.append($('<td>').text(animal.name));
+                        // row.append($('<td>').text(animal.age));
+                        // $('#animalAdoptOptions').append(row);
+                    
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    window.alert(error);
+                });
+
+            // $.ajax({
+            //     type: 'POST',
+            //     url: 'http://localhost:3000/upload', // Replace with the actual server-side endpoint
+            //     data: formData,
+            //     success: function (response) {
+            //         // If the form submission is successful, fetch the JSON data and populate the table
+            //         $.getJSON('data.json', function (data) {
+
+            //             //window.alert("Alert");
+
+            //             for (var i = 0; i < data.length; i += 3) {
+            //                 var row = $('<tr>');
+            //                 for (var j = i; j < Math.min(i + 3, data.length); j++) {
+            //                     var item = data[j];
+            //                     // Create a cell for each property in the item
+            //                     $.each(item, function (key, value) {
+            //                         row.append($('<td>').text(value));
+            //                     });
+            //                 }
+            //                 // Append the row to the table body
+            //                 $('animalAdoptOptions').append(row);
+            //             }
+            //         });
+            //     },
+            //     error: function () {
+            //         window.alert("Error");
+            //     }
+            // });
+
+
+
+
+
+
+
+        });
+
+
+
+    </script>
+
+
+</body>
+
+</html>
