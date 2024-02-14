@@ -7,6 +7,8 @@ import Home from './Components/Home';
 // import Adoption from './Components/Adoption';
 import Adopt from './Components/Adopt';
 import AdoptionTabs from './Components/AdoptionTabs';
+import Lost from './Components/Lost';
+
 
 function App() {
 
@@ -22,6 +24,9 @@ function App() {
       break;
     case "/adopt":
       Component = AdoptionTabs;
+      break;
+    case "/lost":
+      Component = Lost;
       break;
   }
 
