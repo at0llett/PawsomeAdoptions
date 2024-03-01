@@ -2,6 +2,9 @@ import { useState } from 'react';
 import Tabs from './Tabs';
 import Adopt from './Adopt';
 import Favorites from './Favorites';
+import Login from './Login';
+import ToDo from './ToDo/ToDo';
+
 //import Quotes from './Quotes';
 
 export default function LogTabs() {
@@ -26,8 +29,8 @@ export default function LogTabs() {
 
             {activeTab === 0 && (
                 <>
-                    <h1>Log In!</h1>
-
+                
+                    <Login />
                 </>
             )}
 
@@ -43,8 +46,7 @@ export default function LogTabs() {
             {activeTab === 2 && (
                 <>
 
-                    <h1>To Do!</h1>
-
+                    <ToDo />
 
                 </>
             )}
