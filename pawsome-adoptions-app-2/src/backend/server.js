@@ -165,7 +165,24 @@ app.delete('/favorites', middle, (req, res) => {
 
 });
 
+app.post('/register', middle, (req, res) => {
+    const { username, password,email } = req.body;
 
+    db.serialize(() => {
+        db.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT,email TEXT)');
+        db.run('INSERT INTO users (username,password, email) VALUES (?,?,?)', [username, password,email]);
+    });
+
+    db.all('SELECT * FROM users', (err, rows) => {
+        if (err) {
+            console.error(err.message);
+            res.status(500).json({ error: 'Failed to fetch data' });
+        } else {
+            res.json(rows); // Send rows as JSON response
+        }
+    });
+    
+});
 
 // app.get('/favorites', (req, res) => {
 //     db.all('SELECT * FROM favorites', (err, rows) => {
