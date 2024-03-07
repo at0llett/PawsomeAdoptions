@@ -8,6 +8,7 @@ import AdoptionTabs from './frontend/AdoptionTabs';
 import QuotesPage from './frontend/QuotesPage';
 import LogTabs from './frontend/LogTabs';
 import Documentation from './frontend/Documentation';
+import RegistrationForm from './frontend/RegistrationForm';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/quotes" element={<QuotesPage/>} />
           <Route path="/account" element={<LogTabs/>} />
           <Route path="/documentation" element={<Documentation/>} />
+          <Route path="/register" element={<RegistrationForm/>} />
         </Routes>
       </div>
     </Router>

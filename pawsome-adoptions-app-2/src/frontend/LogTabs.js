@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Tabs from './Tabs';
 import Adopt from './Adopt';
 import Favorites from './Favorites';
+import RegistrationForm from './RegistrationForm';
 //import Quotes from './Quotes';
 
 export default function LogTabs() {
@@ -34,7 +35,7 @@ export default function LogTabs() {
             {activeTab === 1 && (
                 <>
 
-                    <h1>Register!</h1>
+                    <RegistrationForm/>
 
 
                 </>
