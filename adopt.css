@@ -3,7 +3,7 @@ body {
     margin-left: 100px;
     margin-right: 100px;
     margin-bottom: 80px;
-    background-image: url('Images/background.png');
+    background-color: #311666;
     background-repeat: no-repeat;
     background-size: cover;
 }
