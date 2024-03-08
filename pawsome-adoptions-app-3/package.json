@@ -16,6 +16,7 @@
     "react-scripts": "5.0.1",
     "sqlite3": "^5.1.7",
     "swagger-jsdoc": "^6.2.8",
+    "swagger-ui": "^5.11.8",
     "swagger-ui-express": "^5.0.0",
     "swagger-ui-react": "^5.11.8",
     "web-vitals": "^2.1.4"

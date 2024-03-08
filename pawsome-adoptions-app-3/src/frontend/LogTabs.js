@@ -4,8 +4,7 @@ import Adopt from './Adopt';
 import Favorites from './Favorites';
 import Login from './Login';
 import ToDo from './ToDo/ToDo';
-
-//import Quotes from './Quotes';
+import Register from './RegistrationForm';
 
 export default function LogTabs() {
 
@@ -29,16 +28,15 @@ export default function LogTabs() {
 
             {activeTab === 0 && (
                 <>
-                
                     <Login />
-                    
+
                 </>
             )}
 
             {activeTab === 1 && (
                 <>
 
-                    <h1>Register!</h1>
+                    <Register />
 
 
                 </>
@@ -47,7 +45,8 @@ export default function LogTabs() {
             {activeTab === 2 && (
                 <>
 
-                    <ToDo />
+                    <ToDo /> 
+
 
                 </>
             )}

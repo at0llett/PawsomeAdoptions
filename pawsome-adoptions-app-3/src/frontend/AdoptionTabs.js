@@ -2,17 +2,13 @@ import { useState } from 'react';
 import Tabs from './Tabs';
 import Adopt from './Adopt';
 import Favorites from './Favorites';
-import Login from './Login';
-import ToDo from './ToDo/ToDo';
-
 //import Quotes from './Quotes';
 
-export default function LogTabs() {
+export default function AdoptionTabs() {
 
     const tabData = [
-        { label: "Log In" },
-        { label: "Register" },
-        { label: "To Do" },
+        { label: "Search" },
+        { label: "Favorites" },
     ];
 
 
@@ -29,28 +25,21 @@ export default function LogTabs() {
 
             {activeTab === 0 && (
                 <>
-                
-                    <Login />
-                    
+                    <h1>Search!</h1>
+                    <Adopt />
                 </>
             )}
 
             {activeTab === 1 && (
                 <>
 
-                    <h1>Register!</h1>
+                <h1>These are your Favorites!</h1>
 
-
+                <Favorites />
                 </>
             )}
 
-            {activeTab === 2 && (
-                <>
-
-                    <ToDo />
-
-                </>
-            )}
+            {/* <Quotes /> */}
 
         </>
 

@@ -36,8 +36,8 @@ export default function Adopt() {
 
                 setAnimals(animalData.animals);
 
-                // console.log(animalData.animals.length);
-                // console.log(animalData.animals[0].type);
+                console.log(animalData.animals.length);
+                console.log(animalData.animals[0].type);
 
 
             });

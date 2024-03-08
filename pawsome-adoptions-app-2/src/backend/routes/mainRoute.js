@@ -8,35 +8,35 @@ const mysql = require('mysql');
 router.use(express.json());
 router.use(cors());
 
-// const connection = mysql.createConnection({
-//     host: '35.230.114.73', 
-//     user: 'root',   
-//     password: 'kRh98VMFkbMD', 
-//     database: 'pawsome_db' 
-// });
+const connection = mysql.createConnection({
+    host: '35.230.114.73', 
+    user: 'root',   
+    password: 'kRh98VMFkbMD', 
+    database: 'pawsome_db' 
+});
 
-// connection.connect((err) => {
-//     if (err) {
-//         console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-//         console.error('Error connecting to database: ', err);
-//         return;
-//     }
-//     console.log('Connected to database');
-// });
-
-
+connection.connect((err) => {
+    if (err) {
+        console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        console.error('Error connecting to database: ', err);
+        return;
+    }
+    console.log('Connected to database');
+});
 
 
 
 
 
-// const db = new sqlite3.Database('src/backend/mydatabase.db', sqlite3.OPEN_READWRITE, (err) => {
-//     if (err) {
-//         console.error(err.message);
-//     } else {
-//         console.log('Connected to the SQLite database.');
-//     }
-// });
+
+
+const db = new sqlite3.Database('src/backend/mydatabase.db', sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+        console.error(err.message);
+    } else {
+        console.log('Connected to the SQLite database.');
+    }
+});
 
 
 /**

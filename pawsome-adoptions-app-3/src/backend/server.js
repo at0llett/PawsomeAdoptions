@@ -15,14 +15,20 @@ var app = express();
 const port = 3001;
 
 const swaggerJSdoc = require("swagger-jsdoc");
-const SwaggerUI = require("swagger-ui-express");
+const swaggerUI = require("swagger-ui-express");
 
 const mainRoute = require('./routes/mainRoute');
 const favRoute = require('./routes/favRoute');
+const reviewRoute = require('./routes/reviewRoute');
+const serviceRoute = require('./routes/serviceRoute');
+const lostfoundRoute = require('./routes/lostfoundRoute');
 const todoRoute = require('./routes/todoRoute');
-const router = require('./routes/mainRoute');
+const registerRoute = require('./routes/registerRoute');
 
-// const swaggerRouter = require('./swaggerRouter');
+
+// const router = require('./routes/mainRoute');
+
+//const swaggerRouter = require('./swaggerRouter');
 
 // app.use(express.bodyParser());
 
@@ -42,62 +48,82 @@ const middle = express.urlencoded({
 //app.use(bodyParser.urlencoded({extended: true}));
 //app.use(express.static('public'));
 
-// const db = new sqlite3.Database('src/backend/mydatabase.db', sqlite3.OPEN_READWRITE, (err) => {
-//     if (err) {
-//         console.error(err.message);
-//     } else {
-//         console.log('Connected to the SQLite database.');
-//     }
-// });
+const db = new sqlite3.Database('src/backend/mydatabase.db', sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+        console.error(err.message);
+    } else {
+        console.log('Connected to the SQLite database.');
+    }
+});
 
-app.use('/', mainRoute);
-app.use('/', favRoute);
-app.use('/task', todoRoute);
+app.use('/quotes', mainRoute);
+app.use('/favorites', favRoute);
+app.use('/reviews', reviewRoute);
+app.use('/services', serviceRoute);
+app.use('/lostfound', lostfoundRoute);
+app.use('/todo', todoRoute);
+app.use('/register', registerRoute);
 //app.use('/api', router);
 
-//CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-// define the Swagger JS DOc configuration
-// const APIDocOptions = {
-//     definition: {
-//         openapi: '3.0.0',
-//         info: {
-//             title : 'Pawsome Adoptions API',
-//             description: 'An API to help animals get adopted and find their proper owners.',
-//             version : '1.0.0',
-//             servers: ['http://localhost:' + port] 
-//         },
-//     },
-//     apis: ['./routes/*.js'], // path to the files containing the API routes.
-// }
 
-// // initialize the Swagger JSDoc
-// const APIDocs = swaggerJSdoc(APIDocOptions);
+const APIDocOptions = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'Pawsome Adoptions API',
+            description: 'An API to help animals get adopted and find their proper humans.',
+            version: '1.0.0',
+            servers: ['http://localhost:' + port]
+        },
+    },
+    apis: ['./src/backend/routes/*.js'],
+}
 
-// // Serve Swagger documentation
-// app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(APIDocs));
 
-// const APIDocOptions = {
-//     definition: {
-//         openapi: '3.0.0',
-//         info: {
-//             title: "Pawsome Adoptions API",
-//             description: "An API to help animals get adopted and find their proper owners.",
-//             version: "1.0.0",
-//             servers: ['http://localhost:' + port]
-//         },
-//     },
-//     apis: ['./routes/*.js'],
-// }
+const APIDocs = swaggerJSdoc(APIDocOptions);
 
-// const APIDocs = swaggerJSdoc(APIDocOptions);
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(APIDocs));
 
-// app.use('/api-docs', SwaggerUI.serve, SwaggerUI.setup(APIDocs));
+
 
 //module.exports = router;
+
+//var table1 = "CREATE TABLE lostfound (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, status TEXT, type TEXT, animal TEXT, description TEXT, contact TEXT)";
+// var table2 = "CREATE TABLE lfcomments (comment_id INTEGER PRIMARY KEY AUTOINCREMENT, id INTEGER, comment TEXT)";
+// db.serialize(() => {
+//     //db.run(table1);
+//     db.run(table2);
+// });
 
 // var table = "CREATE TABLE favorites (id TEXT PRIMARY KEY, name TEXT, type TEXT, gender TEXT age TEXT, size TEXT, image TEXT)";
 // db.serialize(() => {
 //     db.run(table);
+// });
+
+// var table = "CREATE TABLE reviews (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, comment TEXT, animal TEXT, rating TEXT)";
+// db.serialize(() => {
+//     db.run(table);
+// });
+
+// var table = "CREATE TABLE services (id INTEGER PRIMARY KEY AUTOINCREMENT, service TEXT, description TEXT, link TEXT, zip TEXT)";
+// db.serialize(() => {
+//     db.run(table);
+// });
+
+// var insert1 = ["Veterinarian", "Uptown Animal Hospital", "https://uptownvet.com", "98335"];
+// var insert2 = ["Veterinarian", "Harbor Animal Hospital", "https://www.harboranimal.net/", "98332"];
+// var insert3 = ["Veterinarian", "PetZen Animal Wellness Center", "https://petzenanimalwellness.com/", "98335"];
+// var insert4 = ["Veterinarian", "Puget Sound Veterinary Specialty & Emergency", "https://pugetsoundvetspecialists.com", "98335"];
+// var insert5 = ["Veterinarian", "Evergreen Animal Hospital", "https://evergreenpethospital.com", "98335"];
+
+// var insertTemp = "INSERT INTO services (service, description, link, zip) VALUES (?, ?, ?, ?)";
+
+// db.serialize(() => {
+//     db.run(insertTemp, insert1);
+//     db.run(insertTemp, insert2);
+//     db.run(insertTemp, insert3);
+//     db.run(insertTemp, insert4);
+//     db.run(insertTemp, insert5);
 // });
 
 // var insert1 = ["My little dog - a heartbeat at my feet.", "Edith Wharton"];
@@ -147,93 +173,6 @@ app.use('/task', todoRoute);
 //     db.run(insertTemp, insert21);
 // });
 
-// app.get('/quotes', (req, res) => {
-
-//     let query = 'SELECT * FROM quotes ORDER BY RANDOM() LIMIT 1';
-    
-//     // let query = 'SELECT * FROM books';
-
-//     db.all(query, (err, rows) => {
-//         if (err) {
-//             console.error(err.message);
-//             res.status(500).json({ error: 'Failed to fetch data' });
-//         } else {
-//             res.status(200).json(rows);
-//         }
-//     });
-
-// })
-
-// app.post('/quotes', middle, (req, res) => {
-
-//     const { quote, author } = req.body;
-
-//     var insertData = [quote, author];
-//     var insert = "INSERT OR IGNORE INTO quotes (quote, author) VALUES (?, ?)";
-
-//     db.serialize(() => {
-//         db.run(insert, insertData);
-//     });
-// });
-
-// app.get('/favorites', (req, res) => {
-
-//     let query = 'SELECT * FROM favorites';
-    
-//     // let query = 'SELECT * FROM books';
-
-//     db.all(query, (err, rows) => {
-//         if (err) {
-//             console.error(err.message);
-//             res.status(500).json({ error: 'Failed to fetch data' });
-//         } else {
-//             res.status(200).json(rows);
-//         }
-//     });
-
-// })
-
-// app.post('/favorites', middle, (req, res) => {
-
-//     const { id, name, type, gender, age, size, image } = req.body;
-
-//     var insertData = [id, name, type, gender, age, size, image];
-//     var insert = "INSERT OR IGNORE INTO favorites (id, name, type, gender, age, size, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-//     db.serialize(() => {
-//         db.run(insert, insertData);
-//     });
-// });
-
-// app.delete('/favorites', middle, (req, res) => {
-
-//     db.serialize(() => {
-//         db.run('DELETE FROM favorites WHERE id = ?', req.body.id);
-//     });
-
-//     db.all('SELECT * FROM favorites', (err, rows) => {
-//         if (err) {
-//             console.error(err.message);
-//             res.status(500).json({ error: 'Failed to fetch data' });
-//         } else {
-//             res.json(rows); // Send rows as JSON response
-//         }
-//     });
-
-// });
-
-
-
-// app.get('/favorites', (req, res) => {
-//     db.all('SELECT * FROM favorites', (err, rows) => {
-//         if (err) {
-//             console.error(err.message);
-//             res.status(500).json({ error: 'Failed to fetch data' });
-//         } else {
-//             res.json(rows); // Send rows as JSON response
-//         }
-//     });
-// });
 
 
 app.listen(port, () => {
