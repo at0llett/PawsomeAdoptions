@@ -22,6 +22,10 @@ const favRoute = require('./routes/favRoute');
 const reviewRoute = require('./routes/reviewRoute');
 const serviceRoute = require('./routes/serviceRoute');
 const lostfoundRoute = require('./routes/lostfoundRoute');
+const todoRoute = require('./routes/todoRoute');
+const registerRoute = require('./routes/registerRoute');
+
+
 // const router = require('./routes/mainRoute');
 
 //const swaggerRouter = require('./swaggerRouter');
@@ -57,6 +61,8 @@ app.use('/favorites', favRoute);
 app.use('/reviews', reviewRoute);
 app.use('/services', serviceRoute);
 app.use('/lostfound', lostfoundRoute);
+app.use('/todo', todoRoute);
+app.use('/register', registerRoute);
 //app.use('/api', router);
 
 

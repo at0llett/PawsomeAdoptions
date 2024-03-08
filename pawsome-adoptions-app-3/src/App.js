@@ -12,7 +12,13 @@ import Resources from './frontend/Resources';
 import Reviews from './frontend/Reviews';
 import Services from './frontend/Services';
 import LostFound from './frontend/LostFound';
-import Contact from './frontend/Contact';
+import RegistrationForm from './frontend/RegistrationForm';
+import ToDo from './frontend/ToDo/ToDo';
+import AddToDo from './frontend/ToDo/addToDo';
+import UpdateToDo from './frontend/ToDo/UpdateToDo';
+// import About from './frontend/aboutUs.html';
+
+
 
 function App() {
   return (
@@ -29,7 +35,11 @@ function App() {
           <Route path="/reviews" element={<Reviews/>} />
           <Route path="/services" element={<Services/>} />
           <Route path="/lost" element={<LostFound/>} />
-          <Route path="/about" element={<Contact/>} />
+          {/* <Route path="/about" element={<About/>} /> */}
+          <Route path="/register" element={<RegistrationForm/>} />
+          <Route path="/todo" element={<ToDo/>} />
+          <Route path="/addtodo" element={<AddToDo/>} />
+          <Route path="/updatetodo/:task_id" element={<UpdateToDo/>} />
         </Routes>
       </div>
     </Router>

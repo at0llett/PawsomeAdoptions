@@ -8,14 +8,6 @@ const mysql = require('mysql');
 router.use(express.json());
 router.use(cors());
 
-
-
-
-
-
-
-
-
 const db = new sqlite3.Database('src/backend/mydatabase.db', sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
         console.error(err.message);
@@ -130,10 +122,5 @@ router.post('/', (req, res) => {
         });
     });
 });
-
-
-
-
-
 
 module.exports = router;

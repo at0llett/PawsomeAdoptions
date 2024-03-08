@@ -21,7 +21,7 @@ export default function Quotes() {
     }, []);
 
 
-    console.log(quotesR);
+    // console.log(quotesR);
 
     const firstQuote = quotesR.length > 0 ? quotesR[0] : { quote: '', author: '' };
 

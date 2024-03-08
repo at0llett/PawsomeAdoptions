@@ -9,6 +9,8 @@ import QuotesPage from './frontend/QuotesPage';
 import LogTabs from './frontend/LogTabs';
 import Documentation from './frontend/Documentation';
 
+import ToDo from './frontend/ToDo/ToDo';
+
 function App() {
   return (
     <Router>
@@ -17,8 +19,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home/>} />
           <Route path="/adopt" element={<AdoptionTabs/>} />
-          <Route path="/quotes" element={<QuotesPage/>} />
           <Route path="/account" element={<LogTabs/>} />
+          <Route path="/quotes" element={<QuotesPage/>} />
+          <Route path="/todo" element={<ToDo/>} />
           <Route path="/documentation" element={<Documentation/>} />
         </Routes>
       </div>

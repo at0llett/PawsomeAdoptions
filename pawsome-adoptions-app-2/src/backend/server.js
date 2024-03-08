@@ -13,9 +13,21 @@ var cors = require('cors');
 const { json } = require('body-parser');
 var app = express();
 const port = 3001;
+
+const swaggerJSdoc = require("swagger-jsdoc");
+const SwaggerUI = require("swagger-ui-express");
+
+const mainRoute = require('./routes/mainRoute');
+const favRoute = require('./routes/favRoute');
+const todoRoute = require('./routes/todoRoute');
+const router = require('./routes/mainRoute');
+
+// const swaggerRouter = require('./swaggerRouter');
+
 // app.use(express.bodyParser());
 
 app.use(cors());
+app.use(express.json());
 
 //const { type } = require('os');
 
@@ -25,18 +37,63 @@ const middle = express.urlencoded({
     //parameterLimit: 10
 });
 
-app.use(express.json());
+
 
 //app.use(bodyParser.urlencoded({extended: true}));
 //app.use(express.static('public'));
 
-const db = new sqlite3.Database('src/backend/mydatabase.db', sqlite3.OPEN_READWRITE, (err) => {
-    if (err) {
-        console.error(err.message);
-    } else {
-        console.log('Connected to the SQLite database.');
-    }
-});
+// const db = new sqlite3.Database('src/backend/mydatabase.db', sqlite3.OPEN_READWRITE, (err) => {
+//     if (err) {
+//         console.error(err.message);
+//     } else {
+//         console.log('Connected to the SQLite database.');
+//     }
+// });
+
+app.use('/', mainRoute);
+app.use('/', favRoute);
+app.use('/task', todoRoute);
+//app.use('/api', router);
+
+//CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+// define the Swagger JS DOc configuration
+// const APIDocOptions = {
+//     definition: {
+//         openapi: '3.0.0',
+//         info: {
+//             title : 'Pawsome Adoptions API',
+//             description: 'An API to help animals get adopted and find their proper owners.',
+//             version : '1.0.0',
+//             servers: ['http://localhost:' + port] 
+//         },
+//     },
+//     apis: ['./routes/*.js'], // path to the files containing the API routes.
+// }
+
+// // initialize the Swagger JSDoc
+// const APIDocs = swaggerJSdoc(APIDocOptions);
+
+// // Serve Swagger documentation
+// app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(APIDocs));
+
+// const APIDocOptions = {
+//     definition: {
+//         openapi: '3.0.0',
+//         info: {
+//             title: "Pawsome Adoptions API",
+//             description: "An API to help animals get adopted and find their proper owners.",
+//             version: "1.0.0",
+//             servers: ['http://localhost:' + port]
+//         },
+//     },
+//     apis: ['./routes/*.js'],
+// }
+
+// const APIDocs = swaggerJSdoc(APIDocOptions);
+
+// app.use('/api-docs', SwaggerUI.serve, SwaggerUI.setup(APIDocs));
+
+//module.exports = router;
 
 // var table = "CREATE TABLE favorites (id TEXT PRIMARY KEY, name TEXT, type TEXT, gender TEXT age TEXT, size TEXT, image TEXT)";
 // db.serialize(() => {
@@ -90,80 +147,80 @@ const db = new sqlite3.Database('src/backend/mydatabase.db', sqlite3.OPEN_READWR
 //     db.run(insertTemp, insert21);
 // });
 
-app.get('/quotes', (req, res) => {
+// app.get('/quotes', (req, res) => {
 
-    let query = 'SELECT * FROM quotes ORDER BY RANDOM() LIMIT 1';
+//     let query = 'SELECT * FROM quotes ORDER BY RANDOM() LIMIT 1';
     
-    // let query = 'SELECT * FROM books';
+//     // let query = 'SELECT * FROM books';
 
-    db.all(query, (err, rows) => {
-        if (err) {
-            console.error(err.message);
-            res.status(500).json({ error: 'Failed to fetch data' });
-        } else {
-            res.status(200).json(rows);
-        }
-    });
+//     db.all(query, (err, rows) => {
+//         if (err) {
+//             console.error(err.message);
+//             res.status(500).json({ error: 'Failed to fetch data' });
+//         } else {
+//             res.status(200).json(rows);
+//         }
+//     });
 
-})
+// })
 
-app.post('/quotes', middle, (req, res) => {
+// app.post('/quotes', middle, (req, res) => {
 
-    const { quote, author } = req.body;
+//     const { quote, author } = req.body;
 
-    var insertData = [quote, author];
-    var insert = "INSERT OR IGNORE INTO quotes (quote, author) VALUES (?, ?)";
+//     var insertData = [quote, author];
+//     var insert = "INSERT OR IGNORE INTO quotes (quote, author) VALUES (?, ?)";
 
-    db.serialize(() => {
-        db.run(insert, insertData);
-    });
-});
+//     db.serialize(() => {
+//         db.run(insert, insertData);
+//     });
+// });
 
-app.get('/favorites', (req, res) => {
+// app.get('/favorites', (req, res) => {
 
-    let query = 'SELECT * FROM favorites';
+//     let query = 'SELECT * FROM favorites';
     
-    // let query = 'SELECT * FROM books';
+//     // let query = 'SELECT * FROM books';
 
-    db.all(query, (err, rows) => {
-        if (err) {
-            console.error(err.message);
-            res.status(500).json({ error: 'Failed to fetch data' });
-        } else {
-            res.status(200).json(rows);
-        }
-    });
+//     db.all(query, (err, rows) => {
+//         if (err) {
+//             console.error(err.message);
+//             res.status(500).json({ error: 'Failed to fetch data' });
+//         } else {
+//             res.status(200).json(rows);
+//         }
+//     });
 
-})
+// })
 
-app.post('/favorites', middle, (req, res) => {
+// app.post('/favorites', middle, (req, res) => {
 
-    const { id, name, type, gender, age, size, image } = req.body;
+//     const { id, name, type, gender, age, size, image } = req.body;
 
-    var insertData = [id, name, type, gender, age, size, image];
-    var insert = "INSERT OR IGNORE INTO favorites (id, name, type, gender, age, size, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
+//     var insertData = [id, name, type, gender, age, size, image];
+//     var insert = "INSERT OR IGNORE INTO favorites (id, name, type, gender, age, size, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-    db.serialize(() => {
-        db.run(insert, insertData);
-    });
-});
+//     db.serialize(() => {
+//         db.run(insert, insertData);
+//     });
+// });
 
-app.delete('/favorites', middle, (req, res) => {
+// app.delete('/favorites', middle, (req, res) => {
 
-    db.serialize(() => {
-        db.run('DELETE FROM favorites WHERE id = ?', req.body.id);
-    });
+//     db.serialize(() => {
+//         db.run('DELETE FROM favorites WHERE id = ?', req.body.id);
+//     });
 
-    db.all('SELECT * FROM favorites', (err, rows) => {
-        if (err) {
-            console.error(err.message);
-            res.status(500).json({ error: 'Failed to fetch data' });
-        } else {
-            res.json(rows); // Send rows as JSON response
-        }
-    });
+//     db.all('SELECT * FROM favorites', (err, rows) => {
+//         if (err) {
+//             console.error(err.message);
+//             res.status(500).json({ error: 'Failed to fetch data' });
+//         } else {
+//             res.json(rows); // Send rows as JSON response
+//         }
+//     });
 
-});
+// });
 
 
 
