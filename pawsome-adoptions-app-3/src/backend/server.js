@@ -24,6 +24,7 @@ const serviceRoute = require('./routes/serviceRoute');
 const lostfoundRoute = require('./routes/lostfoundRoute');
 const todoRoute = require('./routes/todoRoute');
 const registerRoute = require('./routes/registerRoute');
+const triviaRoute = require('./routes/triviaRoute');
 
 
 // const router = require('./routes/mainRoute');
@@ -63,6 +64,7 @@ app.use('/services', serviceRoute);
 app.use('/lostfound', lostfoundRoute);
 app.use('/todo', todoRoute);
 app.use('/register', registerRoute);
+app.use('/trivia', triviaRoute);
 //app.use('/api', router);
 
 
@@ -85,6 +87,11 @@ const APIDocs = swaggerJSdoc(APIDocOptions);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(APIDocs));
 
 
+
+// var drop = "DROP TABLE User";
+// db.serialize(() => {
+//     db.run(drop);
+// });
 
 //module.exports = router;
 

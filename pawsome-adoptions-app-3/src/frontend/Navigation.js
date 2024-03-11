@@ -45,6 +45,9 @@ export default function Navigation() {
                                 <a className="nav-link" href="/services">Services</a>
                             </li>
                             <li className="nav-item">
+                                <a className="nav-link" href="/trivia">Trivia</a>
+                            </li>
+                            <li className="nav-item">
                                 <a className="nav-link" href="/documentation">Documentation</a>
                             </li>
                          </ul>   

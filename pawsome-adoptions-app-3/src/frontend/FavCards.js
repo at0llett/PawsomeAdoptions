@@ -8,10 +8,8 @@ export default function FavCards({ animal, updateFavorites }) {
 
     var image = "";
 
-    
-
     const handleClick = () => {
-
+        // DELETE request
         fetch('http://localhost:3001/favorites', {
             method: 'DELETE',
             headers: {
@@ -19,19 +17,38 @@ export default function FavCards({ animal, updateFavorites }) {
             },
             body: JSON.stringify({
                 id: animal.id
-              })    
-        }) 
-        .then(response => response.json())
-        .then(data => {
-            //console.log("Is this being called?");
-            //console.log(data); // Log the data to see the structure
-            updateFavorites(data); // Update the state with the fetched data
+            })
+        })
+        .catch(error => {
+            console.error('Error deleting favorite:', error);
         });
 
-       
-
-        
+        updateFavorites(prevFavorites => prevFavorites.filter(favorite => favorite.id !== animal.id));
     };
+
+
+    // const handleClick = () => {
+
+    //     fetch('http://localhost:3001/favorites', {
+    //         method: 'DELETE',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //             id: animal.id
+    //           })    
+    //     }) 
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         //console.log("Is this being called?");
+    //         //console.log(data); // Log the data to see the structure
+    //         updateFavorites(data); // Update the state with the fetched data
+    //     });
+
+
+
+
+    // };
 
 
     // if (animal.image && animal.image.length > 0) {

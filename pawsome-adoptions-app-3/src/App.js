@@ -16,6 +16,7 @@ import RegistrationForm from './frontend/RegistrationForm';
 import ToDo from './frontend/ToDo/ToDo';
 import AddToDo from './frontend/ToDo/addToDo';
 import UpdateToDo from './frontend/ToDo/UpdateToDo';
+import TriviaTabs from './frontend/TriviaTabs';
 // import About from './frontend/aboutUs.html';
 
 
@@ -40,6 +41,7 @@ function App() {
           <Route path="/todo" element={<ToDo/>} />
           <Route path="/addtodo" element={<AddToDo/>} />
           <Route path="/updatetodo/:task_id" element={<UpdateToDo/>} />
+          <Route path="/trivia" element={<TriviaTabs/>} />
         </Routes>
       </div>
     </Router>

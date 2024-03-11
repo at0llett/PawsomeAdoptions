@@ -46,13 +46,53 @@ export default function LostFound() {
                 contact: formData.contact
             })
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to add item');
+                }
+                // If the POST request was successful, make the GET request
+                return fetch(`http://localhost:3001/lostfound`);
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch items');
+                }
+                return response.json();
+            })
             .then(data => {
+                // Update state with the new data
                 setLostFound(data);
             })
-            .catch((error) => {
+            .catch(error => {
                 console.error('Error:', error);
             });
+
+        // fetch(url, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         name: formData.name,
+        //         description: formData.description,
+        //         animal: formData.animal,
+        //         status: formData.status,
+        //         type: formData.type,
+        //         contact: formData.contact
+        //     })
+        // })
+        //     .catch((error) => {
+        //         console.error('Error:', error);
+        //     });
+
+        // fetch(`http://localhost:3001/lostfound`)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         setLostFound(data);
+        //     })
+        //     .catch(error => {
+        //         console.error('Error fetching quotes:', error);
+        //     });
 
     }
 
@@ -79,9 +119,9 @@ export default function LostFound() {
         <>
             <h1>Lost and Found</h1>
 
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <LostFoundUpdate updateLostFound={updateLostFound}/>
-            </div>
+            </div> */}
 
 
             {lostfound.length > 0 ? (
