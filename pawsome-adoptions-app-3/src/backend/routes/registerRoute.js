@@ -14,49 +14,37 @@ const db = new sqlite3.Database('src/backend/mydatabase.db', sqlite3.OPEN_READWR
     }
 });
 
-/**
- * @swagger
- * /register:
- *   post:
- *     summary: Insert a new user into the database.
- *     description: Insert a new user record into the User table.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               username:
- *                 type: string
- *               password:
- *                 type: string
- *               email:
- *                 type: string
- *     responses:
- *       '200':
- *         description: User inserted successfully.
- *       '500':
- *         description: Failed to insert user.
- */
 router.post('/', (req, res) => {
-    const { username, password, email } = req.body;
+    const { username, password, email, name } = req.body;
 
     db.serialize(() => {
-        // db.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT,email TEXT)');
-        db.run('INSERT INTO User (username, password, email) VALUES (?, ?, ?)', [username, password, email], (err) => {
-            if (err) {
-                //console.error('Failed to insert user:', err.message);
-                return res.status(500).json({ error: 'Failed to insert user' });
-            }
-            //console.log('User inserted successfully');
-            // You can return a success message or any other data you need
-            res.setHeader('newRegistration', username);
-            return res.status(200).json({ message: 'User inserted successfully' });
-        });
+        db.run('INSERT INTO User (username, password, email, name) VALUES (?,?,?,?)', [username, password, email, name]);
+    });
+
+    db.all('SELECT * FROM User', (err, rows) => {
+        if (err) {
+            console.error(err.message);
+            res.status(500).json({ error: 'Failed to fetch data' });
+        } else {
+            res.json(rows); // Send rows as JSON response
+        }
     });
     
+});
+
+// get all users' usernames and emails
+router.get('/', (req, res) => {
+
+    let query = 'SELECT username, email FROM User ';
     
+    db.all(query, (err, rows) => {
+        if (err) {
+            console.error(err.message);
+            res.status(500).json({ error: 'Failed to fetch data' });
+        } else {
+            res.status(200).json(rows);
+        }
+    });
 });
 
 module.exports = router;

@@ -1,18 +1,57 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import './Login.css';
 
+
 export default function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+    const [email, setEmail] = useState("");             // for checking if user exists in DB
+    const [password, setPassword] = useState("");       // for checking if user exists in DB
+    const [users, setUsers] = useState([]);             // stores all user info for checking if user exists in DB
+    let username = "";       // for routing to to do page
+
+    useEffect(() => {
+        fetch('http://localhost:3001/login')
+        .then(response => response.json())
+        .then(data => {
+          setUsers(data);
+        })
+        .catch(error => {
+          console.error('Error Fetching To Do List:', error);
+        });
+  
+    }, []);
+
+    // check if this email and password combination are in the database
+    function checkUser() {
+        // console.log('users grabbed', users);    // for testing
+        // console.log(email);
+        // console.log(password);
+        // console.log("Database:");
+    
+        for (let i = 0; i < users.length; i++) {
+            // console.log(users[i].email);
+            // console.log(users[i].password);    // for testing
+
+            if (email === users[i].email && password === users[i].password) {
+                // console.log(users[i].username);
+                username = users[i].username;
+                return true;
+            }
+        }
+        window.alert("This email or password is not in our system.");
+        return false;
+    };
+    
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log({ email, password });   
-
-        // implement backend connection later
-
-        setEmail("");
-        setPassword("");
+        if (checkUser() === true) {
+            e.preventDefault();
+            // console.log('/todo/' + username);   
+            navigate('/todo/' + username);
+        } else {
+            navigate("/account");
+        }
     };
 
     return (
@@ -21,11 +60,11 @@ export default function Login() {
             <main className='login'>
                 <p></p>
                 <h1 className='loginTitle'>Log into your account</h1>
-                <div className="card border-dark mb-3" style={{maxWidth: 20 + 'rem'}}>
+                <div className="card border-dark mb-3" style={{width: 20 + 'rem'}}>
                     <div className="card-body">
                         <form className='loginForm' onSubmit={handleSubmit}>
                             <div className="form-group">
-                                <label for="exampleInputEmail1" className="form-label mt-4">Email address</label>
+                                <label className="form-label mt-4">Email address</label>
                                 <input 
                                     type="email" 
                                     className="form-control" 
@@ -36,30 +75,29 @@ export default function Login() {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
-                                <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                             </div>
                             <div className="form-group">
-                                <label for="exampleInputPassword1" className="form-label mt-4">Password</label>
+                                <label className="form-label mt-4">Password</label>
                                 <input 
                                     type="password" 
                                     className="form-control" 
                                     id="exampleInputPassword1" 
                                     placeholder="Password" 
-                                    autocomplete="off"
+                                    autoComplete="off"
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
                             </div>
-                            <button type="submit" class="btn btn-primary">SIGN IN</button>
+                            <button type="submit" className="btn btn-primary">SIGN IN</button>
                             <p>
-                                Don't have an account? {/*have this link to some registration page */}
+                            <a href="/register">Don't have an account?</a>
                             </p>
                         </form>
                     </div>
                 </div>
 
-                <img src={process.env.PUBLIC_URL + 'images/logo_white.png'} alt="Logo" style={{ width: '200px', height: '200px' }} />
+                <img src={process.env.PUBLIC_URL + '/Images/logo-white.png'} alt="Logo" style={{ width: '200px', height: '200px' }} />
 
             </main>
         </>

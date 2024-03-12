@@ -18,11 +18,42 @@ const db = new sqlite3.Database('src/backend/mydatabase.db', sqlite3.OPEN_READWR
 
 // get all tasks/ first backend test
 // Later on refine to only get tasks for specified user.
-router.get('/', (req, res) => {
+// router.get('/', (req, res) => {
+//     let query = 'SELECT * FROM Task ';
+//     db.all(query, (err, rows) => {
+//         if (err) {
+//             console.error(err.message);
+//             res.status(500).json({ error: 'Failed to fetch data' });
+//         } else {
+//             res.status(200).json(rows);
+//         }
+//     });
+// });
 
-    let query = 'SELECT * FROM Task ';
+// get all data for a specific task task by its id.
+router.get('/:task_id/:username', (req, res) => {
+
+    const task =  req.params.task_id;
+    const sqlQuery = 'SELECT * FROM Task WHERE task_id = ?';
     
-    db.all(query, (err, rows) => {
+    db.all(sqlQuery, [task], (err, rows) => {
+        if (err) {
+            console.error(err.message);
+            res.status(500).json({ error: 'Failed to fetch data' });
+        } else {
+            res.status(200).json(rows);
+        }
+    });
+});
+
+
+// get all tasks and user info for specified user.
+router.get('/:username', (req, res) => {
+
+    const user =  req.params.username;
+    const sqlQuery = 'SELECT * FROM Task INNER JOIN User ON Task.user_id=User.user_id WHERE User.username = ?';
+    
+    db.all(sqlQuery, [user], (err, rows) => {
         if (err) {
             console.error(err.message);
             res.status(500).json({ error: 'Failed to fetch data' });
@@ -39,7 +70,7 @@ router.delete('/', (req, res) => {
         db.run('DELETE FROM Task WHERE task_id = ?', req.body.task_id);
     });
 
-    db.all('SELECT * FROM Task', (err, rows) => {
+    db.all('SELECT * FROM Task WHERE user_id = ?', req.body.user_id, (err, rows) => {
         if (err) {
             console.error(err.message);
             res.status(500).json({ error: 'Failed to fetch data' });
@@ -53,10 +84,11 @@ router.delete('/', (req, res) => {
 // insert a new task into the task table
 router.post('/', (req, res) => {
 
-    const { title, description, due_date, status, task_id, user_id } = req.body;
+    const { title, description, due_date, status, user_id } = req.body;
+    var insertData = [title, description, due_date, status, user_id];
+    console.log(insertData);
 
-    var insertData = [title, description, due_date, status, task_id, user_id];
-    var insert = "INSERT INTO Task (title, description, due_date, status, task_id, user_id) VALUES (?, ?, ?, ?, ?, ?)";
+    var insert = "INSERT INTO Task (title, description, due_date, status, user_id) VALUES (?, ?, ?, ?, ?)";
 
     db.serialize(() => {
         db.run(insert, insertData, function (err) {
@@ -80,6 +112,8 @@ router.post('/', (req, res) => {
     });
 });
 
+
+// update the frontend info for a task (i.e everything except ID #s), title, description, due date, and status
 router.put('/', (req, res) => {
     const { title, description, due_date, status, task_id} = req.body;
 

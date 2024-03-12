@@ -17,9 +17,8 @@ import ToDo from './frontend/ToDo/ToDo';
 import AddToDo from './frontend/ToDo/addToDo';
 import UpdateToDo from './frontend/ToDo/UpdateToDo';
 import TriviaTabs from './frontend/TriviaTabs';
+
 // import About from './frontend/aboutUs.html';
-
-
 
 function App() {
   return (
@@ -36,12 +35,15 @@ function App() {
           <Route path="/reviews" element={<Reviews/>} />
           <Route path="/services" element={<Services/>} />
           <Route path="/lost" element={<LostFound/>} />
-          {/* <Route path="/about" element={<About/>} /> */}
           <Route path="/register" element={<RegistrationForm/>} />
-          <Route path="/todo" element={<ToDo/>} />
-          <Route path="/addtodo" element={<AddToDo/>} />
-          <Route path="/updatetodo/:task_id" element={<UpdateToDo/>} />
+          <Route path="/todo/:username" element={<ToDo/>} />
+          <Route path="/addtodo/:username" element={<AddToDo/>} />
+          <Route path="/updatetodo/:task_id/:username" element={<UpdateToDo/>} />
           <Route path="/trivia" element={<TriviaTabs/>} />
+
+
+          {/* <Route path="/about" element={<About/>} /> */}
+
         </Routes>
       </div>
     </Router>

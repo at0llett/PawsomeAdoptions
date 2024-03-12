@@ -11,7 +11,7 @@ export default function LogTabs() {
     const tabData = [
         { label: "Log In" },
         { label: "Register" },
-        { label: "To Do" },
+        // { label: "To Do" },
     ];
 
 
@@ -42,14 +42,14 @@ export default function LogTabs() {
                 </>
             )}
 
-            {activeTab === 2 && (
+            {/* {activeTab === 2 && (
                 <>
 
                     <ToDo /> 
 
 
                 </>
-            )}
+            )} */}
 
         </>
 

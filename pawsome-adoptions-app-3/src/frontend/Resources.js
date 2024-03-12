@@ -123,8 +123,10 @@ export default function Resources() {
     return (
 
         <>
-            <h1>Information on Breeds of Cats, Dogs and Animals</h1>
-
+            <div class="card border-light mb-3" style={{ width: '400px'}}>
+            <div class="card-header"><h1>Information on Breeds of Cats, Dogs and Animals</h1></div>
+            <div class="card-body">
+            
 
             <form onSubmit={handleDog} style={{ maxWidth: '400px', margin: '0 auto' }}>
                 <div className="form-group">
@@ -149,6 +151,8 @@ export default function Resources() {
                 </div>
                 <button className="btn btn-primary d-block mx-auto my-4" type="submit">Submit</button>
             </form>
+            </div>
+            </div>
 
             {none && (
                 <span class="badge bg-info">No Animals</span>
