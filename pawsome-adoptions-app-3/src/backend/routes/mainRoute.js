@@ -56,6 +56,7 @@ router.get('/', (req, res) => {
             console.error(err.message);
             res.status(500).json({ error: 'Failed to fetch data' });
         } else {
+            res.setHeader('Content-Type', 'application/json');
             res.status(200).json(rows);
         }
     });
@@ -84,25 +85,9 @@ router.get('/', (req, res) => {
  *                description: The author of the quote.
  *    responses:
  *       '200':
- *         description: Successfully inserted the quote into the database.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: A success message indicating the quote was inserted.
+ *         description: Successfully inserted quote.
  *       '500':
- *         description: Failed to insert the quote into the database.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
- *                   description: An error message indicating the failure to insert the quote.
+ *         description: Failed to insert quote.
  */
 router.post('/', (req, res) => {
 
@@ -118,6 +103,7 @@ router.post('/', (req, res) => {
                 res.status(500).json({ error: 'Failed to insert quote.' })
                 return;
             }
+            res.setHeader('newQuote', quote);
             res.status(200).json({ message: 'Successfully inserted quote.' });
         });
     });

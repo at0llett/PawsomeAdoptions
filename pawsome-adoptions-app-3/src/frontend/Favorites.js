@@ -33,7 +33,7 @@ export default function Favorites() {
                 </div>
             ) : (
                 <div className='text-center'>
-                    <span class="badge bg-warning">No Favorites</span>
+                    <span className="badge bg-warning">No Favorites</span>
                 </div>
             )}
 

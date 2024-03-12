@@ -34,7 +34,7 @@ export default function Reviews() {
                 setReviews(data); // Update the state with the fetched data
             })
             .catch(error => {
-                console.error('Error fetching quotes:', error);
+                console.error('Error fetching reviews:', error);
             });
     }, []);
 
@@ -62,10 +62,20 @@ export default function Reviews() {
         })
             .then(response => response.json())
             .then(data => {
-                setReviews(data);
+                fetch('http://localhost:3001/reviews')
+                    .then(response => response.json())
+                    .then(data => {
+                        //console.log("Is this being called?");
+                        //console.log(data); // Log the data to see the structure
+                        setReviews(data); // Update the state with the fetched data
+                    })
+                    .catch(error => {
+                        console.error('Error fetching quotes:', error);
+                    });
             })
             .catch((error) => {
-                alert("ISBN does not correspond to book!");
+                //alert("ISBN does not correspond to book!");
+                alert(error);
                 console.error('Error:', error);
             });
 

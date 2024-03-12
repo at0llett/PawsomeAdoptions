@@ -58,7 +58,7 @@ export default function Services() {
                     <label htmlFor="zip" className="form-label mt-4">Zip Code</label>
                     <select className="form-select" id="zip" name="zip" onChange={handleChange} value={formData.zip}>
                         <option value="All">All</option>
-                        <option value="98333">98333</option>
+                        {/* <option value="98333">98333</option> */}
                         <option value="98332">98332</option>
                         <option value="98335">98335</option>
                     </select>
