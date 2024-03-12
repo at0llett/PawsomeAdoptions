@@ -33,9 +33,9 @@ export default function AdoptionTabs() {
             {activeTab === 1 && (
                 <>
 
-                <h1>These are your Favorites!</h1>
+                    <h1>These are your Favorites!</h1>
 
-                <Favorites />
+                    <Favorites />
                 </>
             )}
 
