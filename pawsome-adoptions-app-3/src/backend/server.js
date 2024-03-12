@@ -25,6 +25,7 @@ const lostfoundRoute = require('./routes/lostfoundRoute');
 const todoRoute = require('./routes/todoRoute');
 const registerRoute = require('./routes/registerRoute');
 const logRoute = require('./routes/logRoute');
+const triviaRoute = require('./routes/triviaRoute');
 
 
 
@@ -66,6 +67,8 @@ app.use('/lostfound', lostfoundRoute);
 app.use('/todo', todoRoute);
 app.use('/register', registerRoute);
 app.use('/login', logRoute);
+app.use('/trivia', triviaRoute);
+
 
 //app.use('/api', router);
 
