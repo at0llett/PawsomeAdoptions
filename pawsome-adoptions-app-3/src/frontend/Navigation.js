@@ -21,9 +21,6 @@ export default function Navigation() {
                                 </a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/about">About&Contact</a>
-                            </li>
-                            <li className="nav-item">
                                 <a className="nav-link" href="/lost">Lost&Found</a>
                             </li>
                             <li className="nav-item">

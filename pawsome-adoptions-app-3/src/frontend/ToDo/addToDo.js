@@ -36,7 +36,7 @@ const AddToDo = () => {
 
     // get all the info for the user and their tasks
     useEffect(() => {
-        // console.log(username);
+        console.log(username);
         if (username !== null) {
             fetch('http://localhost:3001/todo/' + username)
             .then(response => response.json())

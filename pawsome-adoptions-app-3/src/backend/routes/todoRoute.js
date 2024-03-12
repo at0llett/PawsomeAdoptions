@@ -213,9 +213,9 @@ router.post('/', (req, res) => {
             }
         });
 
-        let query = "SELECT * FROM Task";
+        let query = "SELECT * FROM Task WHERE user_id = ?";
 
-        db.all(query, (err, rows) => {
+        db.all(query, [user_id], (err, rows) => {
             if (err) {
                 console.error(err.message);
                 res.status(500).json({ error: 'Failed to fetch data' });
