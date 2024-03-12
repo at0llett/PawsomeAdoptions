@@ -31,6 +31,46 @@ const db = new sqlite3.Database('src/backend/mydatabase.db', sqlite3.OPEN_READWR
 // });
 
 // get all data for a specific task task by its id.
+/**
+ * @swagger
+ * /todo/{task_id}/{username}:
+ *   get:
+ *     summary: Get data for task by its id
+ *     description: Get all data for a specific task by its id
+ *     parameters:
+ *       - in: path
+ *         name: task_id
+ *         required: true
+ *         description: ID of the task to retrieve
+ *         schema:
+ *           type: integer
+ *       - in: path
+ *         name: username
+ *         required: true
+ *         description: username associated with the task
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Data for given id
+ *         content:content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   title:
+ *                     type: string
+ *                   description:
+ *                     type: string
+ *                   due_date:
+ *                     type: string
+ *                   status:
+ *                     type: string
+ *       '500':
+ *         description: Failed to fetch data
+ */
 router.get('/:task_id/:username', (req, res) => {
 
     const task =  req.params.task_id;
@@ -48,6 +88,25 @@ router.get('/:task_id/:username', (req, res) => {
 
 
 // get all tasks and user info for specified user.
+/**
+ * @swagger
+ * /todo/{username}:
+ *   get:
+ *     summary: Get tasks and user info for a specific user.
+ *     description: Retrieve tasks and info for a specific user by their username.
+ *     parameters:
+ *       - in: path
+ *         name: username
+ *         required: true
+ *         description: The username of the user whose tasks to retrieve.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Tasks and user info for the specified user.
+ *       '500':
+ *         description: Failed to fetch data
+ */
 router.get('/:username', (req, res) => {
 
     const user =  req.params.username;
@@ -64,6 +123,31 @@ router.get('/:username', (req, res) => {
 });
 
 // delete a specified task by task id
+/**
+ * @swagger
+ * /todo:
+ *   delete:
+ *     summary: Delete a task.
+ *     description: Delete a task with the specified task_id.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               task_id:
+ *                 type: integer
+ *                 description: The ID of the task to delete.
+ *               user_id:
+ *                 type: integer
+ *                 description: The ID of the user who owns the task.
+ *     responses:
+ *       '200':
+ *         description: Output tasks after deletion
+ *       '500':
+ *         description: Failed to fetch data
+ */
 router.delete('/', (req, res) => {
 
     db.serialize(() => {
@@ -82,6 +166,36 @@ router.delete('/', (req, res) => {
 
 
 // insert a new task into the task table
+/**
+ * @swagger
+ * /todo:
+ *   post:
+ *     summary: Create a new task.
+ *     description: Create a new task with the specified details.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               due_date:
+ *                 type: string
+ *                 format: date
+ *               status:
+ *                 type: string
+ *               user_id:
+ *                 type: integer
+ *     responses:
+ *       '200':
+ *         description: Output tasks after insertion
+ *       '500':
+ *         description: Failed to fetch data
+ */
 router.post('/', (req, res) => {
 
     const { title, description, due_date, status, user_id } = req.body;
@@ -114,6 +228,36 @@ router.post('/', (req, res) => {
 
 
 // update the frontend info for a task (i.e everything except ID #s), title, description, due date, and status
+/**
+ * @swagger
+ * /todo:
+ *   put:
+ *     summary: Update a task.
+ *     description: Update the details of a task with the specified ID.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               due_date:
+ *                 type: string
+ *                 format: date
+ *               status:
+ *                 type: string
+ *               task_id:
+ *                 type: integer
+ *     responses:
+ *       '200':
+ *         description: Updated succesfully.
+ *       '500':
+ *         description: Failed to update data
+ */
 router.put('/', (req, res) => {
     const { title, description, due_date, status, task_id} = req.body;
 

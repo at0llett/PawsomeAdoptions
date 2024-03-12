@@ -14,6 +14,51 @@ const db = new sqlite3.Database('src/backend/mydatabase.db', sqlite3.OPEN_READWR
     }
 });
 
+
+/**
+ * @swagger
+ * /register:
+ *   post:
+ *     summary: Create a new user
+ *     description: Create a new user with the provided username, password, email, and name.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               name:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: User created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   user_id:
+ *                     type: integer
+ *                   username:
+ *                     type: string
+ *                   password:
+ *                     type: string
+ *                   email:
+ *                     type: string
+ *                   name:
+ *                     type: string
+ *       500:
+ *         description: Failed to fetch data
+ */
 router.post('/', (req, res) => {
     const { username, password, email, name } = req.body;
 
@@ -26,13 +71,36 @@ router.post('/', (req, res) => {
             console.error(err.message);
             res.status(500).json({ error: 'Failed to fetch data' });
         } else {
-            res.json(rows); // Send rows as JSON response
+            res.status(200).json(rows); // Send rows as JSON response
         }
     });
     
 });
 
-// get all users' usernames and emails
+
+/**
+ * @swagger
+ * /register:
+ *   get:
+ *     summary: Get all usernames and emails
+ *     description: Retrieve usernames and emails of all users from the database.
+ *     responses:
+ *       200:
+ *         description: An array of user objects containing usernames and emails
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   username:
+ *                     type: string
+ *                   email:
+ *                     type: string
+ *       500:
+ *         description: Failed to fetch data
+ */
 router.get('/', (req, res) => {
 
     let query = 'SELECT username, email FROM User ';

@@ -14,7 +14,32 @@ const db = new sqlite3.Database('src/backend/mydatabase.db', sqlite3.OPEN_READWR
     }
 });
 
-// get all users' emails and passwords
+
+/**
+ * @swagger
+ * /login:
+ *   get:
+ *     summary: Retrieve user information
+ *     description: Retrieve email, password, and username information of all users.
+ *     responses:
+ *       200:
+ *         description: An array of user information.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   email:
+ *                     type: string
+ *                   password:
+ *                     type: string
+ *                   username:
+ *                     type: string
+ *       500:
+ *         description: Failed to fetch user data.
+ */
 router.get('/', (req, res) => {
 
     let query = 'SELECT email, password, username FROM User ';
