@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 const RegistrationForm = () => {
   const navigate = useNavigate();
 
@@ -36,15 +36,15 @@ const RegistrationForm = () => {
 
   // Checks if the username already exists in the database, if so then return false
   function checkUser() {
-    console.log('users grabbed', users);    // for testing
-    console.log(formData.username);
-    console.log(formData.email);
-    console.log("Database:");
+    // console.log('users grabbed', users);    // for testing
+    // console.log(formData.username);
+    // console.log(formData.email);
+    // console.log("Database:");
 
     for (let i = 0; i < users.length; i++) {
 
-      console.log(users[i].username);    // for testing
-      console.log(users[i].email);
+      // console.log(users[i].username);    // for testing
+      // console.log(users[i].email);
 
       if (formData.username === users[i].username) {
         window.alert("This username already being used.");
@@ -53,7 +53,6 @@ const RegistrationForm = () => {
       if (formData.email === users[i].email) {
         window.alert("This email already being used.");
         return true;
-        
       }
     }
     return false;
@@ -76,7 +75,7 @@ const RegistrationForm = () => {
           name: formData.name
         })
       });
-      navigate("/todo");
+      navigate('/todo/' + formData.username);
     } else {
       navigate("/register");
 

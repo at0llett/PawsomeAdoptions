@@ -1,18 +1,57 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import './Login.css';
 
+
 export default function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+    const [email, setEmail] = useState("");             // for checking if user exists in DB
+    const [password, setPassword] = useState("");       // for checking if user exists in DB
+    const [users, setUsers] = useState([]);             // stores all user info for checking if user exists in DB
+    let username = "";       // for routing to to do page
+
+    useEffect(() => {
+        fetch('http://localhost:3001/login')
+        .then(response => response.json())
+        .then(data => {
+          setUsers(data);
+        })
+        .catch(error => {
+          console.error('Error Fetching To Do List:', error);
+        });
+  
+    }, []);
+
+    // check if this email and password combination are in the database
+    function checkUser() {
+        // console.log('users grabbed', users);    // for testing
+        // console.log(email);
+        // console.log(password);
+        // console.log("Database:");
+    
+        for (let i = 0; i < users.length; i++) {
+            // console.log(users[i].email);
+            // console.log(users[i].password);    // for testing
+
+            if (email === users[i].email && password === users[i].password) {
+                // console.log(users[i].username);
+                username = users[i].username;
+                return true;
+            }
+        }
+        window.alert("This email or password is not in our system.");
+        return false;
+    };
+    
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log({ email, password });   
-
-        // implement backend connection later
-
-        setEmail("");
-        setPassword("");
+        if (checkUser() === true) {
+            e.preventDefault();
+            // console.log('/todo/' + username);   
+            navigate('/todo/' + username);
+        } else {
+            navigate("/account");
+        }
     };
 
     return (

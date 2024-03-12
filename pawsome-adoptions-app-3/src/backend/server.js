@@ -24,6 +24,8 @@ const serviceRoute = require('./routes/serviceRoute');
 const lostfoundRoute = require('./routes/lostfoundRoute');
 const todoRoute = require('./routes/todoRoute');
 const registerRoute = require('./routes/registerRoute');
+const logRoute = require('./routes/logRoute');
+
 
 
 // const router = require('./routes/mainRoute');
@@ -63,6 +65,8 @@ app.use('/services', serviceRoute);
 app.use('/lostfound', lostfoundRoute);
 app.use('/todo', todoRoute);
 app.use('/register', registerRoute);
+app.use('/login', logRoute);
+
 //app.use('/api', router);
 
 
